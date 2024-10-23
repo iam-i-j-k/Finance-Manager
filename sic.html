@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+      *,
+      *:before,
+      *:after {
+        box-sizing: border-box;
+        outline: none;
+      }
+
+      html {
+        font-family: 'Poppins';
+        font-size: 16px;
+        font-smooth: auto;
+        font-weight: 300;
+        line-height: 1.5;
+        color: #444;
+      }
+
+      body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .simple-interest {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: max-content;
+        margin: 0;
+        padding: 2.5rem;
+        background-color: whitesmoke;
+        border-radius: 5px;
+        box-shadow: 5px 5px 10px #000;
+
+        h2 {
+          margin: 0 0 1.875rem;
+          padding: 0 0 0.9375rem;
+          border-bottom: 0.0625rem solid #ddd;
+          font-size: 4rem;
+          font-weight: bold;
+          text-align: center;
+          color: #000;
+        }
+
+        .error {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          margin: 0 0 1.25rem;
+          padding: 0.625rem;
+          background-color: lighten(error, 30%);
+          border: 0.125rem solid error;
+          border-radius: 0.625rem;
+          color: error;
+          font-size: 0.75rem;
+          font-weight: 400;
+
+          &.hide {
+            display: none;
+          }
+        }
+
+        form {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          label {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin: 0 0 0.625rem;
+            background: white;
+            border: none;
+            border-radius: 3px;
+
+
+            > span {
+              position: relative;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 15%;
+              padding: 1.5rem;
+              background-color: black;
+              color: white;
+              font-weight: bold;
+              font-size: 2rem;
+            }
+
+            input {
+              position: relative;
+              display: flex;
+              width: 85%;
+              margin: 0;
+              padding: 0.625rem 0.3125rem 0.625rem 0.75rem;
+              background: transparent;
+              border: none;
+              font-family: 'Poppins';
+              font-size: 0.75rem;
+              font-weight: 300;
+            }
+          }
+
+          .button {
+            position: relative;
+            width: 100%;
+            height: 3rem;
+            margin: 0.5rem 0 0;
+            background-color: black;
+            border: none;
+            border-radius: 2px;
+            color: white;
+            font-family: 'Poppins';
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            transition: 0.25s;
+            overflow: hidden;
+
+            &:before {
+              content: "Calculate";
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            &.loading {
+              &:before,
+              &:after {
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+
+              &:before {
+                content: "LOADING";
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                color: whitesmoke;
+                font-size: 0.75rem;
+                font-weight: bold;
+                z-index: 1;
+              }
+
+              &:after {
+                content: "";
+                width: 0%;
+                height: 100%;
+                background-color: green;
+                animation: loading 3s ease;
+                z-index: 0;
+              }
+
+              @keyframes loading {
+                100% {
+                  width: 100%;
+                }
+              }
+            }
+
+            &:hover {
+              transform: scale(0.98);
+              box-shadow: 0 0 0 rgba(black, 0);
+            }
+          }
+        }
+
+        .results {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          margin: 1.25rem 0 0;
+          padding: 0;
+
+          &.hide {
+            display: none;
+          }
+
+          .monthly-payment,
+          .total-interest,
+          .total-amount {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 0.3125rem;
+
+            > span {
+              position: relative;
+              display: flex;
+              align-items: center;
+              height: 1.75rem;
+              padding: 0.3125rem 0.625rem;
+              border: 0.0625rem solid skyblue;
+              font-size: 0.75rem;
+              border-radius: 2px;
+
+              &:first-child {
+                justify-content: flex-start;
+                width: 40%;
+                margin: 0;
+                background-color: skyblue;
+                color: white;
+              }
+
+              &:last-child {
+                justify-content: flex-end;
+                width: 60%;
+                margin: 0;
+                background-color: white;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="simple-interest">
+      <h2>Simple Interest Calculator</h2>
+      <form id="calculate">
+        <label for="principal" class="principal">
+          <span>
+            <i class="fa fa-inr" aria-hidden="true"></i>
+          </span>
+          <input id="principal" type="text" placeholder="Loan Amount" />
+        </label>
+
+        <label for="rate" class="rate">
+          <span class="percent"> % </span>
+          <input id="rate" type="text" placeholder="Interest Rate" />
+        </label>
+
+        <label for="time">
+          <span>
+            <i class="fa fa-clock" aria-hidden="true"></i>
+          </span>
+          <input id="time" type="number" placeholder="Years to Repay" />
+        </label>
+
+        <button class="button" type="submit"></button>
+      </form>
+
+      <div class="results hide">
+        <div class="monthly-payment">
+          <span>Monthly Payment</span>
+          <span id="payment"></span>
+        </div>
+        <div class="total-interest">
+          <span>Total Interest</span>
+          <span id="interest"></span>
+        </div>
+        <div class="total-amount">
+          <span>Total Amount</span>
+          <span id="total"></span>
+        </div>
+      </div>
+    </div>
+    <script>
+      const simpleInterest = document.querySelector(".simple-interest");
+      const button = document.querySelector(".button");
+      //const loading = document.querySelector('.loader');
+      const results = document.querySelector(".results");
+
+      function calculateResults(e) {
+        // ui elements
+        const principal = document.querySelector("#principal");
+        const rate = document.querySelector("#rate");
+        const time = document.querySelector("#time");
+        const monthlyPayment = document.querySelector("#payment");
+        const totalInterest = document.querySelector("#interest");
+        const totalAmount = document.querySelector("#total");
+        // formula variables
+        const p = parseFloat(principal.value);
+        const r = parseFloat(rate.value);
+        const t = parseFloat(time.value);
+
+        // calculate total interest
+        const interest = (p * t * r) / 100;
+        // calculate monthly payment
+        const payment = ((interest + p) / (t * 12)).toFixed(2);
+        // calculate total amount paid
+        const total = (interest + p).toFixed(2);
+
+        if (isFinite(payment)) {
+          totalInterest.innerHTML = "$" + interest.toFixed(2);
+          monthlyPayment.innerHTML = "$" + payment;
+          totalAmount.innerHTML = "$" + total;
+          // hide loader
+          button.classList.remove("loading");
+          // show results
+          results.classList.remove("hide");
+        } else {
+          // show error
+          showError("Please check your numbers and try again.");
+          // hide loader
+          button.classList.remove("loading");
+        }
+      }
+
+      function showError(error) {
+        // create error
+        const errorMessage = document.createElement("div");
+        const calculate = document.querySelector("#calculate");
+
+        errorMessage.className = "error";
+        errorMessage.appendChild(document.createTextNode(error));
+        simpleInterest.insertBefore(errorMessage, calculate);
+        // clear error
+        setTimeout(clearError, 3000);
+      }
+
+      function clearError() {
+        // remove error
+        document.querySelector(".error").remove();
+      }
+
+      button.addEventListener("click", (e) => {
+        console.log("Calculating...");
+        // show loader
+        button.classList.add("loading");
+
+        // set timeout
+        setTimeout(calculateResults, 2000);
+
+        // prevent page from reloading on submit
+        e.preventDefault();
+      });
+    </script>
+  </body>
+</html>
