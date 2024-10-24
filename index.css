@@ -160,3 +160,29 @@ button:hover:after {
       transform: translateY(0);
     }
   }
+
+@media only screen and (max-width:650px) {
+    nav{
+      flex-direction: column;
+    }
+    .navL{
+      width: 100%;
+    }
+    .navR{
+      width: 100%;
+      padding: 0;
+    }
+    .btn{
+      font-size: 0.6rem;
+    }
+    .loader{
+      font-size: 3rem;
+    }
+
+  }
+
+  @media only screen and (max-width:350px) {
+    .loader{
+      font-size: 2rem;
+    }
+  }
